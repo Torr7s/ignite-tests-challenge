@@ -1,8 +1,5 @@
 import { User } from '@modules/users/entities/User';
 
-import { ICreateUserDTO } from '../../createUser/ICreateUserDTO';
-import { IAuthenticateUserResponseDTO } from '../../authenticateUser/IAuthenticateUserResponseDTO';
-
 import { InMemoryUsersRepository } from '@modules/users/repositories/in-memory/InMemoryUsersRepository';
 
 import { AuthenticateUserUseCase } from '../../authenticateUser/AuthenticateUserUseCase';
