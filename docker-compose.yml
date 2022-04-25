@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  database:
+    image: postgres
+    container_name: ignite_database
+    restart: always
+    ports: 
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=ignite
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=ignite
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: ignite
+    restart: always
+    ports: 
+      - 3030:3030
+      - 9229:9229
+    volumes: 
+      - .:/usr/app
+    links: 
+      - database
+    depends_on:
+      - database
+
+volumes:
+  pgdata:
+    driver: local
