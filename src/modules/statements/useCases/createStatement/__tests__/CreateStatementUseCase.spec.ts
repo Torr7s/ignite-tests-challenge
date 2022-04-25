@@ -1,5 +1,3 @@
-import { User } from '@modules/users/entities/User';
-
 import { InMemoryStatementsRepository } from '../../../repositories/in-memory/InMemoryStatementsRepository';
 import { InMemoryUsersRepository } from '@modules/users/repositories/in-memory/InMemoryUsersRepository';
 
@@ -7,7 +5,6 @@ import { CreateStatementUseCase } from '../CreateStatementUseCase';
 
 import { AuthenticateUserUseCase } from '@modules/users/useCases/authenticateUser/AuthenticateUserUseCase';
 import { CreateUserUseCase } from '@modules/users/useCases/createUser/CreateUserUseCase';
-import { ICreateUserDTO } from '@modules/users/useCases/createUser/ICreateUserDTO';
 
 let statementsRepositoryInMemo: InMemoryStatementsRepository;
 let usersRepositoryInMemo: InMemoryUsersRepository;
@@ -66,5 +63,38 @@ describe('CreateStatementUseCase', () => {
     expect(userDepositStatement).toHaveProperty('type')
     expect(userDepositStatement).toHaveProperty('description')
     expect(userDepositStatement).toHaveProperty('amount')
+  })
+
+  it('should be able to create a new withdraw statement', async () => {
+    const user = await createUserUseCase.execute({
+      name: 'test_user',
+      email: 'test_user@gmail.com',
+      password: 'test_password'
+    })
+
+    await authUserUseCase.execute({
+      email: 'test_user@gmail.com',
+      password: 'test_password'
+    })
+
+    await createStatementUseCase.execute({
+      user_id: user.id,
+      type: OperationType.DEPOSIT,
+      description: 'Test deposit statement',
+      amount: 10
+    })
+
+    const userWithdrawStatement = await createStatementUseCase.execute({
+      user_id: user.id,
+      type: OperationType.WITHDRAW,
+      description: 'Test withdraw statement',
+      amount: 10
+    })
+
+    expect(userWithdrawStatement).toHaveProperty('id')
+    expect(userWithdrawStatement).toHaveProperty('user_id')
+    expect(userWithdrawStatement).toHaveProperty('type')
+    expect(userWithdrawStatement).toHaveProperty('description')
+    expect(userWithdrawStatement).toHaveProperty('amount')
   })
 })
