@@ -13,12 +13,12 @@ describe('CreateUserUseCase', () => {
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemo)
   })
 
-  it('should be defined', async () => {
+  it('should be defined', (): void => {
     expect(usersRepositoryInMemo).toBeDefined()
     expect(createUserUseCase).toBeDefined()
   })
 
-  it('should be able to create a new user', async () => {
+  it('should be able to create a new user', async (): Promise<void> => {
     const user: User = await createUserUseCase.execute({
       name: 'test_user',
       email: 'test_user@gmail.com',

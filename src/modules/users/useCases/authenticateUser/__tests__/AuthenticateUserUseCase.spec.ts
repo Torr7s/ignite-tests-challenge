@@ -17,7 +17,7 @@ describe('AuthenticateUserUseCase', (): void => {
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemo)
   })
 
-  it('should be defined', async (): Promise<void> => {
+  it('should be defined', (): void => {
     expect(usersRepositoryInMemo).toBeDefined()
     expect(authUserUseCase).toBeDefined()
     expect(createUserUseCase).toBeDefined()
